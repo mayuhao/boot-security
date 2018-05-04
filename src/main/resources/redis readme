@@ -1,0 +1,4 @@
+mac下
+/usr/local/redis-4.0.9
+cd src
+./redis-server
