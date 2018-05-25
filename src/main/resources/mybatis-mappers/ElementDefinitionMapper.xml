@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boot.security.server.dao.ElementDefinitionDao">
+
+	<sql id="where">
+		<where>
+			<if test="params.id != null and params.id != ''">
+				and id = #{params.id} 
+			</if>
+			<if test="params.form_id != null and params.form_id != ''">
+				and form_id = #{params.formId} 
+			</if>
+			<if test="params.element_id != null and params.element_id != ''">
+				and element_id = #{params.elementId} 
+			</if>
+			<if test="params.element_key != null and params.element_key != ''">
+				and element_key = #{params.elementKey} 
+			</if>
+			<if test="params.element_value != null and params.element_value != ''">
+				and element_value = #{params.elementValue} 
+			</if>
+			<if test="params.create_by != null and params.create_by != ''">
+				and create_by = #{params.createBy} 
+			</if>
+			<if test="params.create_date != null and params.create_date != ''">
+				and create_date = #{params.createDate} 
+			</if>
+			<if test="params.update_by != null and params.update_by != ''">
+				and update_by = #{params.updateBy} 
+			</if>
+			<if test="params.update_date != null and params.update_date != ''">
+				and update_date = #{params.updateDate} 
+			</if>
+		
+		</where>
+	</sql>
+
+	<select id="count" resultType="int">
+		select count(1) from element_definition t
+		<include refid="where" />
+	</select>
+
+	<select id="list" resultType="ElementDefinition">
+		select * from element_definition t
+		<include refid="where" />
+		${params.orderBy}
+		limit #{offset}, #{limit}
+	</select>
+
+	<update id="update">
+		update element_definition t
+		<set>
+			<if test="form_id != null">
+				form_id = #{formId}, 
+			</if>
+			<if test="element_id != null">
+				element_id = #{elementId}, 
+			</if>
+			<if test="element_key != null">
+				element_key = #{elementKey}, 
+			</if>
+			<if test="element_value != null">
+				element_value = #{elementValue}, 
+			</if>
+			<if test="create_by != null">
+				create_by = #{createBy}, 
+			</if>
+			<if test="create_date != null">
+				create_date = #{createDate}, 
+			</if>
+			<if test="update_by != null">
+				update_by = #{updateBy}, 
+			</if>
+			<if test="update_date != null">
+				update_date = #{updateDate}, 
+			</if>
+
+		</set>
+
+		where t.id = #{id}
+	</update>
+
+</mapper>

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boot.security.server.dao.FormInstanceDao">
+
+	<sql id="where">
+		<where>
+			<if test="params.ID != null and params.ID != ''">
+				and ID = #{params.ID} 
+			</if>
+			<if test="params.FORM_ID != null and params.FORM_ID != ''">
+				and FORM_ID = #{params.FORMID} 
+			</if>
+			<if test="params.INSTANCE_ID != null and params.INSTANCE_ID != ''">
+				and INSTANCE_ID = #{params.INSTANCEID} 
+			</if>
+			<if test="params.INSTANCE_NAME != null and params.INSTANCE_NAME != ''">
+				and INSTANCE_NAME = #{params.INSTANCENAME} 
+			</if>
+			<if test="params.RESPONDENT_ID != null and params.RESPONDENT_ID != ''">
+				and RESPONDENT_ID = #{params.RESPONDENTID} 
+			</if>
+			<if test="params.START_DATE != null and params.START_DATE != ''">
+				and START_DATE = #{params.STARTDATE} 
+			</if>
+			<if test="params.END_DATE != null and params.END_DATE != ''">
+				and END_DATE = #{params.ENDDATE} 
+			</if>
+			<if test="params.CREATE_BY != null and params.CREATE_BY != ''">
+				and CREATE_BY = #{params.CREATEBY} 
+			</if>
+			<if test="params.CREATE_DATE != null and params.CREATE_DATE != ''">
+				and CREATE_DATE = #{params.CREATEDATE} 
+			</if>
+			<if test="params.UPDATE_BY != null and params.UPDATE_BY != ''">
+				and UPDATE_BY = #{params.UPDATEBY} 
+			</if>
+			<if test="params.UPDATE_DATE != null and params.UPDATE_DATE != ''">
+				and UPDATE_DATE = #{params.UPDATEDATE} 
+			</if>
+		
+		</where>
+	</sql>
+
+	<select id="count" resultType="int">
+		select count(1) from form_instance t
+		<include refid="where" />
+	</select>
+
+	<select id="list" resultType="FormInstance">
+		select * from form_instance t
+		<include refid="where" />
+		${params.orderBy}
+		limit #{offset}, #{limit}
+	</select>
+
+	<update id="update">
+		update form_instance t
+		<set>
+			<if test="ID != null">
+				ID = #{ID}, 
+			</if>
+			<if test="FORM_ID != null">
+				FORM_ID = #{FORMID}, 
+			</if>
+			<if test="INSTANCE_ID != null">
+				INSTANCE_ID = #{INSTANCEID}, 
+			</if>
+			<if test="INSTANCE_NAME != null">
+				INSTANCE_NAME = #{INSTANCENAME}, 
+			</if>
+			<if test="RESPONDENT_ID != null">
+				RESPONDENT_ID = #{RESPONDENTID}, 
+			</if>
+			<if test="START_DATE != null">
+				START_DATE = #{STARTDATE}, 
+			</if>
+			<if test="END_DATE != null">
+				END_DATE = #{ENDDATE}, 
+			</if>
+			<if test="CREATE_BY != null">
+				CREATE_BY = #{CREATEBY}, 
+			</if>
+			<if test="CREATE_DATE != null">
+				CREATE_DATE = #{CREATEDATE}, 
+			</if>
+			<if test="UPDATE_BY != null">
+				UPDATE_BY = #{UPDATEBY}, 
+			</if>
+			<if test="UPDATE_DATE != null">
+				UPDATE_DATE = #{UPDATEDATE}, 
+			</if>
+
+		</set>
+
+		where t.id = #{id}
+	</update>
+
+</mapper>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" media="screen" href="../../css/bootstrap.min.css">
+</head>
+<body>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	<form class="form-horizontal" onsubmit="return false" id="form">
+		<fieldset>
+			<div class='form-group'>
+				<label class='col-md-2 control-label'>formId</label>
+				<div class='col-md-10'>
+					<input class='form-control' placeholder='formId' type='text' name='formId' id='formId' data-bv-notempty='true' data-bv-notempty-message='formId 不能为空'>
+				</div>
+			</div>
+			<div class='form-group'>
+				<label class='col-md-2 control-label'>formName</label>
+				<div class='col-md-10'>
+					<input class='form-control' placeholder='formName' type='text' name='formName' id='formName' data-bv-notempty='true' data-bv-notempty-message='formName 不能为空'>
+				</div>
+			</div>
+			<div class='form-group'>
+				<label class='col-md-2 control-label'>elementId</label>
+				<div class='col-md-10'>
+					<input class='form-control' placeholder='elementId' type='text' name='elementId' id='elementId' data-bv-notempty='true' data-bv-notempty-message='elementId 不能为空'>
+				</div>
+			</div>
+			<div class='form-group'>
+				<label class='col-md-2 control-label'>elementSeq</label>
+				<div class='col-md-10'>
+					<input class='form-control' placeholder='elementSeq' type='text' name='elementSeq' id='elementSeq' data-bv-notempty='true' data-bv-notempty-message='elementSeq 不能为空'>
+				</div>
+			</div>
+			<div class='form-group'>
+				<label class='col-md-2 control-label'>elementType</label>
+				<div class='col-md-10'>
+					<input class='form-control' placeholder='elementType' type='text' name='elementType' id='elementType' data-bv-notempty='true' data-bv-notempty-message='elementType 不能为空'>
+				</div>
+			</div>
+			<div class='form-group'>
+				<label class='col-md-2 control-label'>createBy</label>
+				<div class='col-md-10'>
+					<input class='form-control' placeholder='createBy' type='text' name='createBy' id='createBy' data-bv-notempty='true' data-bv-notempty-message='createBy 不能为空'>
+				</div>
+			</div>
+			<div class='form-group'>
+				<label class='col-md-2 control-label'>createDate</label>
+				<div class='col-md-10'>
+					<input class='form-control' placeholder='createDate' type='text' name='createDate' id='createDate' data-bv-notempty='true' data-bv-notempty-message='createDate 不能为空'>
+				</div>
+			</div>
+			<div class='form-group'>
+				<label class='col-md-2 control-label'>updateBy</label>
+				<div class='col-md-10'>
+					<input class='form-control' placeholder='updateBy' type='text' name='updateBy' id='updateBy' data-bv-notempty='true' data-bv-notempty-message='updateBy 不能为空'>
+				</div>
+			</div>
+			<div class='form-group'>
+				<label class='col-md-2 control-label'>updateDate</label>
+				<div class='col-md-10'>
+					<input class='form-control' placeholder='updateDate' type='text' name='updateDate' id='updateDate' data-bv-notempty='true' data-bv-notempty-message='updateDate 不能为空'>
+				</div>
+			</div>
+
+
+			<div class="form-actions">
+				<div class="row" align="center">
+					<div class="col-md-12">
+					    <button class="btn btn-primary" onclick="location.href='formDefinitionList.html'">返回</button>
+						<button class="btn btn-primary" type="submit" onclick="add()">
+							<i class="fa fa-save"></i> 保存
+						</button>
+					</div>
+				</div>
+			</div>
+
+		</fieldset>
+	</form>
+</div>
+	<script type="text/javascript" src="../../js/libs/jquery-2.1.1.min.js"></script>
+	<script type="text/javascript" src="../../js/jq.js"></script>
+	<script type="text/javascript" src="../../js/plugin/bootstrapvalidator/bootstrapValidator.min.js"></script>
+	<script type="text/javascript" src="../../js/common.js"></script>
+	<script type="text/javascript" src="../../layui/layui.js"></script>
+	<script type="text/javascript">
+		layui.use(['layer','laydate'], function(){
+		    var layer = layui.layer;
+		});
+		
+		function add() {
+			$('#form').bootstrapValidator();
+			var bootstrapValidator = $("#form").data('bootstrapValidator');
+			bootstrapValidator.validate();
+		    if(!bootstrapValidator.isValid()){
+			   return;
+		    }
+		    
+		    var formdata = $("#form").serializeObject();
+
+			$.ajax({
+				type : 'post',
+				url : '/formDefinitions',
+				contentType: "application/json; charset=utf-8",  
+				data : JSON.stringify(formdata),
+				success : function(data) {
+					layer.msg("添加成功", {shift: -1, time: 1000}, function(){
+                        location.href = "formDefinitionList.html";
+                    });
+				}
+			});
+		}
+		
+	</script>
+</body>
+</html>
